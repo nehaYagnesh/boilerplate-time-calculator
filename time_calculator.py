@@ -45,20 +45,18 @@ def add_time(starttime, duration, dayoftheweek=None):
         dayoftheweek_format = dayoftheweek.lower().capitalize()   # returns a string with the first letter of the string as capital whereas other letter as small 
         day_index = days_in_week.index(dayoftheweek_format)
     
-    while int(totaltime_hours) >= 24:     # If the totaltimehours is greater than 24 then subtract by 24
+    while int(totaltime_hours) >= 24:     # If the totaltimehours is greater then 24 then subtract by 24
         totaltime_hours = int(totaltime_hours) - 24
         day_index += 1
         number_of_days += 1
-        if meridian in meridian_total_list and (abs(totaltime_hours - int(hours)) > 12 or number_of_days ==1 ):
+        if meridian in meridian_total_list and (totaltime_hours - int(hours) == 0 and number_of_days ==1):
+            meridian_l[0] = meridian
+        elif meridian in meridian_total_list and (abs(totaltime_hours - int(hours)) > 12 or number_of_days ==1 ):
             meridian_total_list.remove(meridian)
             meridian_l = meridian_total_list
-        
-
         if totaltime_hours == 0:
             totaltime_hours = 12
         total_hour_12format = totaltime_hours
-        
-    
     if dayoftheweek is not None:
         if number_of_days > 1:
             new_time = str(total_hour_12format) + ':' + str(totaltime_minutes)+ ' '+ str(meridian_l[0]) + ', ' + days_in_week[day_index % 7] + ' (' + str(number_of_days) + ' days later)'
@@ -72,10 +70,4 @@ def add_time(starttime, duration, dayoftheweek=None):
         new_time = str(total_hour_12format) + ':' + str(totaltime_minutes)+ ' '+ str(meridian_l[0]) + ' (' + str(number_of_days) + ' days later)'
     else:
         new_time = str(total_hour_12format) + ':' + str(totaltime_minutes)+ ' '+ str(meridian_l[0])
-    # print('Total hours:',new_time)
     return new_time
-    
-
-# actual = add_time("11:55 AM", "3:12")
-# # expected = "3:07 PM"
-# print(actual)
