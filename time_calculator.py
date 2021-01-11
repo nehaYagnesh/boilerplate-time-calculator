@@ -1,5 +1,4 @@
 def add_time(starttime, duration, dayoftheweek=None):
-
     days_in_week = (
         'Monday', 'Tuesday', 'Wednesday', 'Thursday',
         'Friday', 'Saturday', 'Sunday'
@@ -64,30 +63,17 @@ def add_time(starttime, duration, dayoftheweek=None):
             totaltime_hours = 12
         total_hour_12format = totaltime_hours
 
-    new_time = (str(total_hour_12format) 
-                + ':' 
-                + str(totaltime_mins)
-                + ' '
-                + str(meridian_l[0]))
+    new_time = f'{total_hour_12format}:{totaltime_mins} {meridian_l[0]}' 
     if dayoftheweek is not None:
         if number_of_days > 1:
-            new_time += (', ' 
-                         + days_in_week[day_index % 7] 
-                         + ' (' 
-                         + str(number_of_days)
-                         + ' days later)')
+            new_time += f', {days_in_week[day_index % 7]} ({number_of_days} days later)'
         elif number_of_days == 1:
-            new_time += (', ' 
-                         + days_in_week[day_index % 7] 
-                         + ' (next day)')
-        else: 
-            new_time += (', ' 
-                         + days_in_week[day_index % 7])
+            new_time += f', {days_in_week[day_index % 7]} (next day)'
+        else:
+            new_time += f', {days_in_week[day_index % 7]}'
     elif number_of_days == 1:
         new_time += ' (next day)'
     elif number_of_days > 1:
-        new_time += (' ('
-                     + str(number_of_days) 
-                     + ' days later)')
+        new_time += f' ({number_of_days} days later)'
     
     return new_time
