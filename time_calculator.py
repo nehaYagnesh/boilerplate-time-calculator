@@ -41,7 +41,7 @@ def add_time(starttime, duration, dayoftheweek=None):
             total_hour_12format = 12
         if abs(totaltime_hours - hours) < 12:
             meridian_total_list.remove(meridian)
-            meridian_l = meridian_total_list    
+            meridian_l = meridian_total_list  
 
     if dayoftheweek is not None:
         dayoftheweek_format = dayoftheweek.lower().capitalize()
@@ -64,16 +64,17 @@ def add_time(starttime, duration, dayoftheweek=None):
         total_hour_12format = totaltime_hours
 
     new_time = f'{total_hour_12format}:{totaltime_mins} {meridian_l[0]}' 
-    if dayoftheweek is not None:
-        if number_of_days > 1:
+    if number_of_days > 1:
+        if dayoftheweek is not None:
             new_time += f', {days_in_week[day_index % 7]} ({number_of_days} days later)'
-        elif number_of_days == 1:
+        else:
+            new_time += f' ({number_of_days} days later)'
+    elif number_of_days == 1:
+        if dayoftheweek is not None:
             new_time += f', {days_in_week[day_index % 7]} (next day)'
         else:
-            new_time += f', {days_in_week[day_index % 7]}'
-    elif number_of_days == 1:
-        new_time += ' (next day)'
-    elif number_of_days > 1:
-        new_time += f' ({number_of_days} days later)'
-    
+            new_time += ' (next day)'
+    elif dayoftheweek is not None:
+        new_time += f', {days_in_week[day_index % 7]}'
+        
     return new_time
