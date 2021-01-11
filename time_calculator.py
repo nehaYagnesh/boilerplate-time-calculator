@@ -5,7 +5,6 @@ def add_time(starttime, duration, dayoftheweek=None):
         'Friday', 'Saturday', 'Sunday'
         )
     day_index = 0
-    total_hour_12format = 0
     meridian_total_list = ['AM', 'PM']
     number_of_days = 0
     time_, meridian = starttime.split()
@@ -25,9 +24,8 @@ def add_time(starttime, duration, dayoftheweek=None):
                           + round(add_hours, 2))
 
     # Adding duration to starttime
-    total_time_24format_decimal = ''.join('{:.2f}')        \
-                                    .format(starttime_hours 
-                                            + duration_add_hours)
+    total_time_24format_decimal = '{:.2f}'.format(starttime_hours 
+                                                  + duration_add_hours)
    
     # Converting the total time from decimal hours to hours and minutes
     totaltime_hours, totaltime_mins = (int(t) for t in total_time_24format_decimal.split('.'))
@@ -54,15 +52,14 @@ def add_time(starttime, duration, dayoftheweek=None):
         totaltime_hours = totaltime_hours - 24
         day_index += 1
         number_of_days += 1
-        if (meridian in meridian_total_list 
-                and (totaltime_hours - hours == 0 
-                        and number_of_days == 1)):
-            meridian_l[0] = meridian
-        elif (meridian in meridian_total_list 
-                 and (abs(totaltime_hours - hours) > 12 
-                         or number_of_days == 1)):
-            meridian_total_list.remove(meridian)
-            meridian_l = meridian_total_list
+        if meridian in meridian_total_list:
+            if (totaltime_hours - hours == 0 
+                and number_of_days == 1):
+                meridian_l[0] = meridian
+            elif (abs(totaltime_hours - hours) > 12 
+                  or number_of_days == 1):
+                meridian_total_list.remove(meridian)
+                meridian_l = meridian_total_list
         if totaltime_hours == 0:
             totaltime_hours = 12
         total_hour_12format = totaltime_hours
